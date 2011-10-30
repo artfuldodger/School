@@ -1,0 +1,274 @@
+Author: Jonathan Evans
+Course: Database Design
+Assign: Lab 1
+
+Mission Objectives
+------------------
+We need to maintain information on schools.
+We need to maintain information on teachers.
+We need to maintain information on students.
+We need to maintain information on their entries.
+We need to store the entries themselves.
+We need to store information about judges' votes on the entries.
+
+Subjects
+--------
+Schools
+Teachers
+Students
+Judges
+Judges' Votes
+Entries
+Portfolios
+Awards
+
+Preliminary Field List
+----------------------
+Judge Username
+Judge Password
+Judge First Name
+Judge Last Name
+
+Vote by Judge
+Vote for Entry
+Vote Score
+
+School Name
+School Type
+School Street Address
+School City
+School Zip
+School Phone
+School Fax
+School Type
+
+Student School
+Student First Name
+Student Last Name
+Student Street Address
+Student City 
+Student State
+Student Zip
+Student Grade
+Student Age
+Student Email
+Student Phone
+Student Fax
+Student Consent Signed Date (null indicates not signed)
+
+Student Entry - Student
+Student Entry - Teacher
+Student Entry - Category
+Student Entry - Portfolio (null if not associated with a portfolio)
+Student Entry - Title
+Student Entry - Description
+Student Entry - File
+
+Student Portfolio - Student
+Student Portfolio - Type
+Student Portfolio - Description
+
+Entry Award - Student Entry
+Entry Award - Award
+
+Award - Name
+Award - Description
+
+Parent - Student
+Parent - First Name
+Parent - Last Name
+Parent - Email
+Parent - Consent Signed Date (null indicates not signed)
+
+Teacher - School
+Teacher - Title ['Dr', 'Mr', 'Ms']
+Teacher - First Name
+Teacher - Last Name
+
+Principal - School
+Principal - Title ['Dr', 'Mr', 'Ms']
+Principal - First Name
+Principal - Last Name
+
+Category - Name
+Category - Description
+Category - Instructions
+
+Portfolio - Student
+Portfolio - Dimension Length
+Portfolio - Dimension Width
+Portfolio - Dimension Height
+Portfolio - Length Minutes
+Portfolio - Length Seconds
+Portfolio - Title
+Portfolio - Description
+
+Demographic Info - Student
+Demographic Info - Gender
+Demographic Info - Race
+Demographic Info - Income
+
+Photography Consent - Entry
+Photography Consent - Date Signed
+Photography Consent - Subject Name
+Photography Consent - Subject Address
+Photography Consent - Subject City
+Photography Consent - Subject State
+Photography Consent - Subject Zip
+
+
+Preliminary Design
+----------------
+
+judge
+=====
+id
+username
+password
+first_name
+last_name
+
+votes
+=====
+judge_id
+entry_id
+score
+
+school
+======
+id
+name
+type
+street_address
+city
+state
+zip
+phone
+fax
+
+student
+======
+id
+school_id
+first_name
+last_name
+street_address
+city
+state
+zip
+grade
+age
+email
+phone
+fax
+group
+consent_signed_date (null indicates not signed)
+
+student_entry
+=============
+id
+student_id
+teacher_id
+category_id
+student_portfolio_id (null if not associated with a portfolio)
+entry_title
+description
+file
+
+student_portfolio
+=================
+id
+student_id
+portfolio_type
+description
+
+entry_award
+=====
+id
+student_entry_id
+award_id
+
+award
+=====
+id
+name
+description
+
+parent
+======
+id
+student_id
+first_name
+last_name
+email
+consent_signed_date (null indicates not signed)
+
+school_type
+===========
+id
+name ['Public School', 'Public/Art Magnet School', 'Private School', 'Parochial School', 'Home School', 'Other']
+
+teacher
+=======
+id
+school_id
+title ['Dr', 'Mr', 'Ms']
+first_name
+last_name
+consent_signed_date (null indicates not signed)
+
+principal
+=========
+id
+school_id
+title ['Dr', 'Mr', 'Ms']
+first_name
+last_name
+
+category
+========
+id
+name
+description
+instructions
+
+portfolio
+=========
+id
+student_id
+dimension_length
+dimension_width
+dimension_height
+length_minutes
+length_seconds
+title
+description
+
+demographic_info
+================
+id
+student_id
+gender_id
+race_id
+income_id
+
+gender
+======
+id
+name
+
+income
+======
+id
+name
+
+photography_consent
+===================
+id
+student_id
+date_signed
+subject_name
+subject_address
+subject_city
+subject_state
+subject_zip

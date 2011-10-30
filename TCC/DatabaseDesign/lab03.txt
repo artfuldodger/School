@@ -1,0 +1,265 @@
+Author: Jonathan Evans
+Course: Database Design
+Assign: Lab 3
+
+Description: Candidate keys (CKs), combination candidate keys (CCKs), and the primary key (PK) are identified underneath the table description.
+
+Judges
+======
+Type: Data
+Description: Judges are the individuals who can log in and vote on the contest entries. We need the Judges table to store their login credentials and track their votes.
+
+CKs: Judge Id, Judge Username
+CKK: [Judge First Name, Judge Last Name]
+
+PK: Judge Id
+
+Fields
+------
+Judge Id
+Judge Username
+Judge Password
+Judge First Name
+Judge Last Name
+
+
+Votes
+=====
+Type: Linking
+Description: Votes are cast by judges for entries. We need the Votes table to be able to record how many votes an entry has received for scoring purposes.
+
+CCK and PK: [Judge Id, Entry Id]
+
+Fields
+------
+Judge Id
+Entry Id
+
+Schools
+=======
+Type: Data
+Description: Schools are institutions of learning. We need the Schools table in order to track where students attend and see the affiliations of teachers.
+
+CKs: School Id
+PK: School Id
+
+
+Fields
+------
+School Id
+School Name
+School Type
+School Street Address
+School City
+School State
+School Zip
+School Phone
+School Fax
+
+Students
+========
+Type: Data
+Description: Students are entrants to the contest. We need the Students table to store information about the people who have entered the contest. It also is needed to store their credentials for logging in to edit entries prior to the deadline.
+
+CKs: Student Id, Student Username
+PK: Student Id
+
+Fields
+------
+Student Id
+Student Username
+Student Password
+Student School
+Student First Name
+Student Last Name
+Student Street Address
+Student City 
+Student State
+Student Zip
+Student Grade
+Student Age
+Student Email
+Student Phone
+Student Fax
+Student Consent Signed Date (null indicates not signed)
+
+Student Entries
+===============
+Type: Data
+Description: Student Entries are works of art submitted to the contest. We need the entries stored in order to make them available for the judges to vote on (and what's an art contest without any art, anyway?). We also need this table to keep track of to which round an entry has made it.
+
+CK and PK: Student Entry Id
+
+Fields
+------
+Student Entry Id
+Student Id
+Teacher Id
+Category Id
+Portfolio Id (null if not associated with a portfolio)
+Round Number
+Student Entry Title
+Student Entry Description
+Student Entry File
+
+Student Portfolio
+=================
+Type: Data
+Description: A Portfolio represents an entry of a group of works. It is needed so that groups of works can be judged as a whole instead of as individual entries.
+
+CK and PK: Student Portolio Id
+
+Fields
+------
+Student Portfolio Id
+Student Id
+Category Id
+Portfolio Dimension Length
+Portfolio Dimension Width
+Portfolio Dimension Height
+Portfolio Length Minutes
+Portfolio Length Seconds
+Portfolio Title
+Portfolio Description
+
+
+Entry Awards
+============
+Type: Linking
+Description: An Entry Award represents that an Entry has been given an Award. We need this table in order to store which awards have been given to which entries.
+
+CKK and PK: [Student Entry Id, Award Id]
+
+Fields
+------
+Student Entry Id
+Award Id
+
+Awards
+======
+Type: Validation
+Description: An Award represents an honor/distinction granted by the judges to a particular entry. We need this table to store the possible Awards that can be given.
+
+CK: Award Id, Award Name
+PK: Award Id
+
+Fields
+------
+Award Id
+Award Name ['Gold Key', 'Silver Key']
+Award Description
+
+Parents
+=======
+Type: Data
+Description: Parents are the legal guardians of the contest entrants. We need this table to ensure that they have granted permission for the student to enter the contest as well as to be store contact information in case an issue arises.
+
+CK: Parent Id
+CKK: [Parent First Name, Parent Last Name]
+PK: Parent Id
+
+Fields
+------
+Parent Id
+Student Id
+Parent First Name
+Parent Last Name
+Parent Email
+Parent Consent Signed Date (null indicates not signed)
+
+Teachers
+========
+Type: Data
+Description: Teachers oversee the entrants to the contest. Their information must be stored so that they can be contacted in case an issue arises/to notify winners/etc.
+
+CK: Teacher Id, Teacher Email
+CKK: [Teacher First Name, Teacher Last Name]
+PK: Teacher Id
+
+Fields
+------
+Teacher Id
+School Id
+Title Id
+Teacher First Name
+Teacher Last Name
+Teacher Email
+
+Principals
+==========
+Type: Data
+Description: Principals are the individuals in charge of a particular school. Their information is stored so that we know who to contact at a particular school if we have to go over a teacher's head.
+
+CK: Principal Id
+CKK: [Principal First Name, Principal Last Name]
+PK: Principal Id
+
+Fields
+------
+Principal Id
+School Id
+Title Id
+Principal First Name
+Principal Last Name
+
+Titles
+======
+Type: Validation
+Description: Titles are prefixes added to someone's name to indicate status. This information is stored so that the various individuals whose information we store can be addressed properly. This table also ensures that a valid title is selected.
+
+CK: Title Id, Title Name
+PK: Title Id
+
+Fields
+------
+Title Id
+Title Name ['Dr', 'Mr', 'Mrs', 'Ms']
+
+Category
+========
+Type: Data
+Description: Categories are the various types of art that entries can be categorized in. This information is stored so that entries can be submitted into a particular category.
+
+CK: Category Id, Category Name
+PK: Category Id
+
+Fields
+------
+Category Id
+Category Name
+Category Description
+Category Instructions
+
+Demographic Information
+=======================
+Type: Data
+Description: Demographic information stores information about a student's demographics. It is stored so that we can gather statistics about the contest participants and perhaps consider affirmative action when handing out awards.
+
+CK: Student Id
+PK: Student Id (one-to-one relationship - does not need its own id)
+
+Fields
+------
+Student Id
+Demographic Info Gender
+Demographic Info Race
+Demographic Info Income
+
+Photography Consent
+===================
+Type: Data
+Description: Photography Consent forms represent that if an entry is a photograph of people, they have signed a consent form. This information must be stored to ensure that the pictures can be used legally.
+
+CK: Photography Consent Id
+PK: Photography Consent Id
+
+Fields
+------
+Photography Consent Id
+Student Entry Id
+Photography Consent Date Signed
+Photography Consent Subject Name
+Photography Consent Subject Address
+Photography Consent Subject City
+Photography Consent Subject State
+Photography Consent Subject Zip

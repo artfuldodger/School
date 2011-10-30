@@ -1,0 +1,80 @@
+Author: Jonathan Evans
+Course: Database Design
+Assign: Lab 6
+
+Business Rules
+==============
+
+Statement: Any school with students entering the contest must be based in the United States.
+Constraint: Entries for the State field in the Schools table are limited to existing values of the State field in the States table.
+Note: Requires new States validation table (included in revised ER diagram)
+
+Statement: Any student entering the contest must live in the United States.
+Constraint: Entries for the State field in the Students table are limited to existing values of the State field in the States table.
+
+Statement: Any photographic consent must be for an individual who lives in the United States.
+Constraint: Entries for the State field in the Photography Consents table are limited to existing values of the State field in the States table.
+
+Statement: A student is allowed to have two portfolio entries.
+Constraint: Up to two entries in the Student Portfolios table are allowed per entry in the Students table.
+
+Statement: If a student has two portfolio entries, one must be in an art category and one must be in a photographic category.
+Constraint: If two entries exist in the Student Portfolios table for one entry in the Students table, then the corresponding Categories table entry for one must be in an art category and the other must be in a photographic category.
+
+Statement: Any principal must have an appropriate title (Mr, Mrs, etc) to use when addressing them.
+Constraint: Entries for the Title Id field in the Principals table are limited to existing values of the Title Id field in the Titles table.
+
+Statement: Any teacher must have an appropriate title (Mr, Mrs, etc) to use when addressing them.
+Constraint: Entries for the Title Id field in the Teachers table are limited to existing values of the Title Id field in the Titles table.
+
+Statement: Invalid contest entry categories are not allowed.
+Constraint: Entries for the Category Id field in the Student Entries table are limited to existing values of the Category Id field in the Categories table.
+
+Statement: Invalid portfolio categories are not allowed.
+Constraint: Entries for the Category Id field in the Student Portfolios table are limited to existing values of the Category Id field in the Categories table.
+
+Statement: Every entry must have an associated teacher.
+Constraint: An entry in the Student Entries table must have a Teacher Id of an entry in the Teachers table.
+
+Statement: Every teacher must have an associated school.
+Constraint: An entry in the Teachers table must have a valid School Id for an entry in the Schools table.
+
+Statement: Every award must be associated with an existing entry.
+Constraint: An entry in the Entry Awards table must have a valid Student Entry Id of an existing row in the Student Entries table.
+
+Statement: Every award given to an entry must be for a valid award.
+Constraint; An entry in the Entry Awards table must have a valid Award Id for an existing row in the Awards table.
+
+Statement: Every parent must be associated with a student.
+Constraint: An entry in the Parents table must have a valid Student Id for a row in the Students table.
+
+Statement: Every vote must be by an existing judge.
+Constraint: An entry in the Votes table must have a valid Judge Id for an existing row in the Judges table.
+
+Statement: Every vote must be for an existing entry.
+Constraint: An entry in the Votes table must have a valid Student Entry Id for an existing row in the Student Entries table.
+
+Statement: Every contest entry must be for an existing student.
+Constraint: An entry in the Student Entries table must have a valid Student Id for an existing row in the Student Entries table.
+
+Statement: Every contest entry must be associated with a teacher.
+Constraint: An entry in the Student Entries table must have a valid Teacher Id for a row in the Teachers table.
+
+Views
+=====
+Entry Scores
+------------
+------------
+Purpose: Allow judges/admins to see the entries along with the total votes they have received.
+Fields:
+Student Entry Title
+Total Votes [COUNT(*) FROM Votes WHERE Student Entry Id = x)]
+
+Winning Entries
+---------------
+---------------
+Purpose: Allow for easy display of the entries that won at the end of the contest.
+Fields:
+Student Entry Title
+Award Name
+

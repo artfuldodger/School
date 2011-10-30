@@ -1,0 +1,86 @@
+Author: Jonathan Evans
+Course: Database Design
+Assign: Lab 7 - Database Security
+
+Concerns
+========
+The database users the public web application uses can't modify the database schema.
+--------------
+In order to ensure no dramatic damage to the database's structure can be done by exploiting the web application, the database users that the web application uses to connect to the database should not be able to modify the structure. This means they will only have SELECT, INSERT, UPDATE, DELETE permissions (and not CREATE or DROP).
+
+
+Only judges can vote.
+---------------------
+To ensure that judges can vote, we can use a different database account for the web application to connect to the database if the user is logged in as a judge than if he is logged in as a student. If only the judge database account has permission to access the Student Entry Votes table, then there's no way a nefarious student could trick the application (see section on SQL injection below) into giving him unearned votes.
+
+There will, of course, also be application-level security that only exposes the voting UI components to judges and checks that the user is logged in (authentication) and is a judge (authorizization) before allowing him to vote or see the total votes.
+
+If it's decided that we don't need to go to the extent of creating separate database accounts for the web application to use, this protection could be implemented sufficiently in the application level. Taking this extra step just ensures that a programmatic mistake would not expose this risk.
+
+Backup Strategy [2]
+===============
+Backups must be made regularly, and they must be tested. If you wait until your database becomes corrupted to find out that your backups haven't been working as expected, you're out of luck. After making our first backup, and on a regular basis to ensure the process is still working, we need to actually take the backup and restore it to a test database and verify that the database structure is complete and the data is entirely restored.
+
+It is also a best practice to store copies of your backups off-site for disaster recovery. If there's a tornado that wipes out your primary data center, you don't want it to take all the physical media with your backups out too.
+
+While backups on physical media makes sense in an enterprise environment, it would probably be more appropriate for our small website to store a copy in the cloud somewhere. We could write a script to store our backups in S3, for example. We could even, if we're feeling particularly lazy and trusting, choose a host that offers backups included in the hosting plan. Then we wouldn't have to worry about it.
+
+Roles
+=====
+As discussed previously, we will have at least two separate roles: admin and web. The admin role grants database accounts permissions to do things like create and drop tables. The web role is given to the accounts used by the web application to access the database. It does not need to be able to affect the structure of our database.
+
+Depending on the importance placed on security, we will likely have two web roles: web-student and web-judge. Only the web-judge role will have any permissions on the Student Entry Votes table.
+
+Application Security
+====================
+Private Data
+------------
+With the exception of the admin users, we need to ensure that only the student who entered personal information is able to see all of it. We certainly don't want to allow the world to see all these students' addresses, demographic information, etc. The application will have to ensure that only the student who entered this information is able to see it. Even judges have no reason to see this information. This needs to be on the application-level because the student needs to be able to enter/verify this information.
+
+SQL Injection [3]
+-----------------
+SQL injection is one of the most commonly exploited vulnerabilities in web application. It is due to developers not properly sanitizing input. Say the web application is expecting the student to see his personal information, say with a query like
+
+SELECT * FROM students WHERE username='whatever';
+
+If the input (username) is not sanitized, then a malicious user could enter something like
+
+' or '1'='1
+
+and then it would return the private data for ALL the students. This is obviously undesirable.
+
+One commonly used method is to simply escape characters that could enable SQL injection; for example, the mysql_real_escape_string method is often used for this purpose. This, however, is error-prone, as if the developer ever forgets to use the method, then the application is vulnerable.
+
+When coding SQL by hand, the best way to mitigate this risk is to use parameterized queries. This way user input is not directly embedded in the SQL statement.
+
+While using ORMs, such as Active Record, helps to reduce this risk, there are still precautions that need to be taken. For example, this is vulnerable:
+
+Student.find(:all, :conditions => "username = '#{username}'")
+
+As it inserts username directly into the SQL query. Here is the corrected query statement:
+
+Student.find(:all, :conditions => ["username = ?", username])
+
+Active Record will ensure that username is sanitized and SQL injection is not possible.
+
+Cross-site scripting [4]
+------------------------
+We also need to ensure that a malicious student couldn't insert JavaScript into some publicly available field, such as the entry description.
+
+As an example, if we did not check for this, a user could include the following snippet in their entry description:
+
+<script>window.location='http://heyletsdownloadavirus.com';</script>
+
+Which would send the person browsing the page off to a malicious site, for the purpose of phishing or downloading malware. A particular enterprising student could possibly divine the URL required to vote for their entries and send off an AJAX request to make any judges that come across the page vote for their entries. This could go unnoticed indefinitely.
+
+While manually encoding HTML characters can make this harder for an attacker, it is likely that you will forget something. It's advisable to use a library, such as HTML Purifier (http://htmlpurifier.org/) to use a whitelist instead of a blacklist when accepting user input. When you use a blacklist, you will forget something.
+
+Sources
+=======
+"Privileges, Roles, and Security Policies" from Oracle9i Database Concepts - http://download.oracle.com/docs/cd/B10500_01/server.920/a96524/c24privs.htm
+
+[2] "Backup and Recovery Strategies" from Oracle9i Backup and Recovery Concepts - http://download.oracle.com/docs/cd/B10500_01/server.920/a96519/strategy.htm
+
+[3] http://en.wikipedia.org/wiki/SQL_injection
+
+[4] http://en.wikipedia.org/wiki/Cross-site_scripting

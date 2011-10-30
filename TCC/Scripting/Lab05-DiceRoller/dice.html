@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+	"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<title>Lab05 - Dice Roller</title>
+	<style type="text/css">
+	  ul {
+	    list-style-type: none;
+	  }
+	  #errors {
+	    color: red;
+	    font-size: 1.4em;
+	  }
+	</style>
+</head>
+
+<body>
+
+<form id="roll_form" action="#" method="get">
+  <label for="sides">Number of sides:</label>
+  <input type="text" name="sides" id="sides" value="6" />
+  <input type="submit" value="Roll the dice" />
+</form>
+
+<div id="errors"></div>
+
+<div id="resultsDiv">
+  <ul id="results"></div>
+</div>
+
+<div id="resultsPercentDiv">
+  <ul id="resultsPercent"></div>
+</div>
+
+<script type="text/javascript" charset="utf-8">
+
+  var NUM_ROLLS = 36000;
+
+  function Die( ) {
+    this.sides = 6;
+    this.roll = function( ) {
+      return parseInt((Math.random( ) * 1000) % this.sides) + 1;
+    }
+  }
+  
+  var form = document.getElementById('roll_form');
+  var errorDiv = document.getElementById('errors');
+  var resultsList = document.getElementById('results');
+  var resultsDiv = document.getElementById('resultsDiv');
+  var resultsPercentList = document.getElementById('resultsPercent');
+  var resultsPercentDiv = document.getElementById('resultsPercentDiv');
+  
+  form.onsubmit = function() {
+    resultsList.innerHTML='';
+    errorDiv.innerHTML='';
+    resultsPercentList.innerHTML='';
+    
+    var headers = document.getElementsByTagName('h2');
+    for (var i=0; i < headers.length; i++) {
+      headers[i].innerHTML = '';
+    }
+    var sides = document.getElementById('sides').value;
+    if (sides < 2 || sides > 100) {
+      sides = 6;
+      var errorText = document.createTextNode('Invalid number of sides entered, so we\'re using 6.');
+      errorDiv.appendChild(errorText);
+    }
+    
+    var d1 = new Die();
+    var d2 = new Die();
+    d1.sides = sides;
+    d2.sides = sides;
+    
+    var rolls = {};
+    
+    // Do all rolls
+    for (var i = 0; i < NUM_ROLLS; i++) {
+      var sum = d1.roll() + d2.roll();
+      if (!rolls[sum]) {
+        rolls[sum] = 0;
+      }
+      rolls[sum] += 1;
+      //console.log("on " + i + " rolled " + sum);
+    }
+    
+    // Display sums and number of times each occurred
+    var heading = document.createTextNode('Sum and Number of Occurences');
+    var h2 = document.createElement('h2');
+    h2.appendChild(heading);
+    resultsDiv.insertBefore(h2, resultsList);
+    
+    for (var i = 2; i <= (sides*2); i++) {
+      var text = document.createTextNode(i + ": " + (rolls[i] || "0"));
+      var li = document.createElement('li');
+      li.appendChild(text);
+      resultsList.appendChild(li);
+    }
+    
+    // Display percentage list
+    heading = document.createTextNode('Sum and Percentage of Occurences');
+    h2 = document.createElement('h2');
+    h2.appendChild(heading);
+    resultsPercentDiv.insertBefore(h2, resultsPercentList);
+    
+    for (var i = 2; i <= (sides*2); i++) {
+      var text = document.createTextNode(i + ": " + (((rolls[i] || "0")/NUM_ROLLS)*100).toFixed(2) + "%");
+      var li = document.createElement('li');
+      li.appendChild(text);
+      resultsPercentList.appendChild(li);
+    }
+    
+    return false;
+  }
+  
+</script>
+</body>
+</html>
