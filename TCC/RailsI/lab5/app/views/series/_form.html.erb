@@ -1,0 +1,28 @@
+<%= form_for(@series) do |f| %>
+  <% if @series.errors.any? %>
+  <div id="errorExplanation">
+    <h2><%= pluralize(@series.errors.count, "error") %> prohibited this post from being saved:</h2>
+    <ul>
+    <% @series.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+  <% end %>
+ 
+  <div class="field">
+    <%= f.label :title %><br />
+    <%= f.text_field :title %>
+  </div>
+  <div class="field">
+    <%= f.label :start_date %><br />
+    <%= date_select :series, :start_date %>
+  </div>
+  <div class="field">
+    <%= f.label :end_date %><br />
+    <%= date_select :series, :end_date %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
