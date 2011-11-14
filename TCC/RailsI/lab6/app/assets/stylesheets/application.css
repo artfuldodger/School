@@ -5,3 +5,8 @@
  *= require_self
  *= require_tree . 
 */
+
+#main_notice {
+  text-align: center;
+  font-size: 2em;
+}

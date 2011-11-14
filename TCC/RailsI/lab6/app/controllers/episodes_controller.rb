@@ -9,6 +9,8 @@ class EpisodesController < ApplicationController
 
   def new
     @episode = Episode.new
+    @episode.series = Series.find_by_title(params[:series]) if Series.all.map(&:title).include?(params[:series])
+
   end
 
   def create

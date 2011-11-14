@@ -1,7 +1,8 @@
 Lab4::Application.routes.draw do
   resources :episodes
-
-  root :to => "episode#index"
+  resources :series
+  
+  root :to => "series#index"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

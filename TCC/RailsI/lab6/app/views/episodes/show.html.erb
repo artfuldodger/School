@@ -3,6 +3,9 @@
 <h3>Title</h3>
 <%= @episode.title %>
 
+<h3>Series</h3>
+<%= link_to @episode.series.title, @episode.series %>
+
 <h3>Episode Number</h3>
 <%= @episode.episode_number %>
 

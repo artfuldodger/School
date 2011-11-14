@@ -1,26 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Lab5</title>
+  <title>Lab4</title>
   <%= stylesheet_link_tag    "application" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
 </head>
 <body>
 
+<p><%= notice %></p>
 
-<div id="main_notice"><%= notice %></div>
-
-<div style="width: 20%; float: left; text-align: center">
-  <div>- navigation -</div>
-  <br />
-  <%= link_to 'Episodes', episodes_path %><br />
-  <%= link_to 'Series', series_index_path %>
-  </ul>
-</div>
-<div style="width: 80%; float: left">
-  <%= yield %>
-</div>
+<%= yield %>
 
 </body>
 </html>
