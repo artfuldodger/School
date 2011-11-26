@@ -22,9 +22,25 @@ sigma = 0.3;
 %  Note: You can compute the prediction error using 
 %        mean(double(predictions ~= yval))
 %
+potential_params = [0.01, 0.03, 0.1, 0.3, 1, 3, 10, 30];
+errors = zeros ([1,64]);
 
+%for i = 1:8,
+%  for j = 1:8,
+%    C = potential_params(i);
+%    sigma = potential_params(j);
+%    model = svmTrain(X, y, C, @(x1, x2) gaussianKernel(x1, x2, sigma));
+%    predictions = svmPredict(model, Xval);
+%    errors(8*(i-1)+j) = mean(double(predictions ~= yval));
+%  end
+%end
 
+%[C,I] = min(errors);
+%C = potential_params(mod(I, 8)+1)
+%sigma = potential_params(rem (I, 8))
 
+C =  0.30000
+sigma =  0.10000
 
 
 
