@@ -1,0 +1,31 @@
+<h1>Series</h1>
+
+<h3>Title</h3>
+<%= @series.title %>
+
+<h3>Start Date</h3>
+<%= @series.start_date %>
+
+<h3>End Date</h3>
+<p><%= @series.end_date %></p>
+
+<h1>Episodes</h1>
+
+<% if @episodes.blank? %>
+  <p>No episodes!</p>
+<% end %>
+
+<ul>
+  <% @episodes.each do |episode| %>
+    <li>
+      <%= episode.title %> 
+      [ <%= link_to 'show', [@series,episode] %> | 
+        <%= link_to 'edit', edit_series_episode_path(@series,episode) %> | 
+        <%= link_to 'delete', [@series,episode], :method => 'delete', :confirm => 'Are you sure?' %> 
+      ]
+    </li>
+  <% end %>
+</ul>
+
+<%= link_to 'All Series', series_index_path %> |
+<%= link_to 'Create new episode.', new_series_episode_path(@series) %>

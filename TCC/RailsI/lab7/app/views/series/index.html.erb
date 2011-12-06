@@ -1,0 +1,20 @@
+<h1>Series</h1>
+
+<% if @series.blank? %>
+  <p>No series!</p>
+<% end %>
+
+<ul>
+  <% @series.each do |s| %>
+    <li>
+      <%= s.title %> 
+      (<strong><%= s.episodes.count %></strong> episodes)
+      [ <%= link_to 'show', series_episodes_path(s) %> | 
+        <%= link_to 'edit', edit_series_path(s) %> | 
+        <%= link_to 'delete', series_path(s), :method => 'delete', :confirm => 'Are you sure?' %> 
+      ]
+    </li>
+  <% end %>
+</ul>
+
+<%= link_to 'Create new series.', new_series_path %>
