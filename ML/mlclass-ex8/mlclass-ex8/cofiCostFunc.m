@@ -40,13 +40,31 @@ Theta_grad = zeros(size(Theta));
 %                     partial derivatives w.r.t. to each element of Theta
 %
 
+% cost function
+diff = (X*Theta'-Y);
+J = sum((diff.^2)(R==1))/2;
+theta_regularization = lambda*sum(sum(Theta.^2))/2;
+x_regularization = lambda*sum(sum(X.^2))/2;
 
+J = J + theta_regularization + x_regularization;
 
+% X_grad
+for i=1:num_movies
+  users_that_have_rated_movie = find(R(i, :)==1);
+  user_features_of_movie = Theta(users_that_have_rated_movie, :);
+  user_ratings_of_movie = Y(i, users_that_have_rated_movie);
+  X_grad(i, :) = (X(i, :)*user_features_of_movie' - user_ratings_of_movie)*user_features_of_movie;
+  X_grad(i, :) = X_grad(i, :)+lambda*X(i, :); % regularized term of x.
+end
 
-
-
-
-
+% Theta_grad
+for j=1:num_users
+  movies_rated_by_user = find(R(:, j)==1)';
+  features_of_rated_movies = X(movies_rated_by_user, :);
+  user_ratings = Y(movies_rated_by_user, j);
+  Theta_grad(j, :) = (features_of_rated_movies*Theta(j, :)'-user_ratings)'*features_of_rated_movies;
+  Theta_grad(j, :) = Theta_grad(j, :)+lambda*Theta(j, :);
+end
 
 
 
