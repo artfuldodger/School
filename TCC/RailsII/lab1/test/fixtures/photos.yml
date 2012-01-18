@@ -1,11 +1,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 one:
-  title: MyString
-  album: 
-  image: 
+  title: SomePhoto
+  album: one
+  image: asdf
 
 two:
-  title: MyString
-  album: 
-  image: 
+  title: AnotherPhoto
+  album: two
+  image: asdf
