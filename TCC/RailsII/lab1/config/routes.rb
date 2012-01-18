@@ -1,7 +1,8 @@
 Lab1::Application.routes.draw do
-  resources :photos
-
-  resources :albums
+  
+  resources :albums do
+    resources :photos
+  end
 
   root :to => 'albums#index'
   # The priority is based upon order of creation:

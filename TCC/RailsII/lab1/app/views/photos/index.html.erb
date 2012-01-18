@@ -15,13 +15,13 @@
     <td><%= photo.title %></td>
     <td><%= photo.album %></td>
     <td><%= photo.image %></td>
-    <td><%= link_to 'Show', photo %></td>
-    <td><%= link_to 'Edit', edit_photo_path(photo) %></td>
-    <td><%= link_to 'Destroy', photo, confirm: 'Are you sure?', method: :delete %></td>
+    <td><%= link_to 'Show', [@album, photo] %></td>
+    <td><%= link_to 'Edit', edit_album_photo_path(@album, photo) %></td>
+    <td><%= link_to 'Destroy', [@album, photo], confirm: 'Are you sure?', method: :delete %></td>
   </tr>
 <% end %>
 </table>
 
 <br />
 
-<%= link_to 'New Photo', new_photo_path %>
+<%= link_to 'New Photo', new_album_photo_path(@album) %>

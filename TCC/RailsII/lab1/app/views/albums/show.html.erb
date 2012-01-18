@@ -10,6 +10,11 @@
   <%= @album.description %>
 </p>
 
+<p>
 
+</p>
+
+<%= link_to 'Add Photo', new_album_photo_path(@album) %>
+<hr />
 <%= link_to 'Edit', edit_album_path(@album) %> |
 <%= link_to 'Back', albums_path %>

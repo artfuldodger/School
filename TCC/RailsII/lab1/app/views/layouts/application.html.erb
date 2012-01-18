@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Lab1</title>
+  <title>Photo Gallery</title>
   <%= stylesheet_link_tag    "application" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
 </head>
 <body>
+
+<%= link_to 'All Albums', albums_path %>
+
+<hr />
 
 <%= yield %>
 
