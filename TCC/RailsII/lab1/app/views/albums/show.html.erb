@@ -10,11 +10,20 @@
   <%= @album.description %>
 </p>
 
-<p>
+<% if @album.photos.present? %>
+    <% @album.photos.each do |photo| %>
+      <%= link_to album_photo_path(@album, photo) do %>
+        <img src="/images/<%= photo.image %>" width="200" height="200" />
+      <% end %>
+      </li>
+    <% end %>
+<% else %>
+  <p>No photos here yet.</p>
+<% end %>
 
-</p>
-
+<hr />
 <%= link_to 'Add Photo', new_album_photo_path(@album) %>
 <hr />
 <%= link_to 'Edit', edit_album_path(@album) %> |
+<%= link_to 'Destroy', @album, confirm: 'Are you sure?', method: :delete %> |
 <%= link_to 'Back', albums_path %>

@@ -2,6 +2,23 @@
 
 one:
   title: SomePhoto
+  album: two
+  image: asdf
+
+one2:
+  title: SomeOtherPhoto
+  album: two
+  image: asdf
+
+photo_album_one_id_1:
+  id: 1
+  title: PhotoWithIdSetAt1
+  album: one
+  image: asdf
+
+photo_album_one_id_2:
+  id: 2
+  title: PhotoWithIdSetAt2
   album: one
   image: asdf
 

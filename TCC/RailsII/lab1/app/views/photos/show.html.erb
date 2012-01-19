@@ -10,11 +10,28 @@
   <%= link_to @album.title, @album %>
 </p>
 
-<p>
-  <b>Image:</b>
-  <%= @photo.image %>
-</p>
+<div>
+  <% if @photo.last_in_album? %>
+    <%= link_to album_path(@album) do %>
+      <img src="/images/<%= @photo.image %>" />
+    <% end %>
+  <% else %>
+    <%= link_to album_photo_path(@album, @photo.next) do %>
+      <img src="/images/<%= @photo.image %>" />
+    <% end %>
+  <% end %>
+  
+  <br />
+  <% unless @photo.first_in_album? %>
+    <%= link_to '< Previous Photo', album_photo_path(@album, @photo.previous) %>
+  <% end %>
+  <% unless @photo.last_in_album? %>
+    <%= link_to 'Next Photo >', album_photo_path(@album, @photo.next) %>
+  <% end %>
+</div>
 
+<hr />
 
-<%= link_to 'Edit', edit_album_photo_path(@photo) %> |
-<%= link_to 'Back', album_photos_path %>
+<%= link_to 'Edit', edit_album_photo_path(@album, @photo) %> |
+<%= link_to 'Destroy', [@album, @photo], confirm: 'Are you sure?', method: :delete %> |
+<%= link_to 'Back', @album %>

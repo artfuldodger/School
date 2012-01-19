@@ -2,8 +2,16 @@ require 'test_helper'
 
 class PhotosControllerTest < ActionController::TestCase
   setup do
-    @album = albums(:one)
+    @album = albums(:two)
     @photo = photos(:one)
+    test_image = fixture_path + "gangster.jpg"
+    @file = Rack::Test::UploadedFile.new(test_image, "image/jpeg")
+    @photo.image = @file
+  end
+
+  teardown do
+    file_path = "#{Rails.root}/public/images/gangster.jpg"
+    File.delete(file_path) if File.exists?(file_path)
   end
 
   test "should get index" do
@@ -19,7 +27,7 @@ class PhotosControllerTest < ActionController::TestCase
 
   test "should create photo" do
     assert_difference('Photo.count') do
-      post :create, photo: @photo.attributes, album_id: @album.to_param
+      post :create, photo: @photo.attributes.merge(:image => @file), album_id: @album.to_param
     end
 
     assert_redirected_to album_photo_path(@album, assigns(:photo))
@@ -36,8 +44,8 @@ class PhotosControllerTest < ActionController::TestCase
   end
 
   test "should update photo" do
-    put :update, id: @photo.to_param, album_id: @album.to_param, photo: @photo.attributes
-    assert_redirected_to album_photo_path(assigns(:photo))
+    put :update, id: @photo.to_param, album_id: @album.to_param, photo: @photo.attributes.merge(:image => @file)
+    assert_redirected_to album_photo_path(@album, assigns(:photo))
   end
 
   test "should destroy photo" do
