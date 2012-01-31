@@ -1,0 +1,10 @@
+To create the admin user and the three roles, please run `rake db:seed`
+
+This will create the following three roles:
+- user
+- moderator
+- admin
+
+The user role grants people basic access to the site. This role is granted to people who sign up by themselves.
+The moderator role grants people ability to edit things submitted by other people.
+The admin role can edit other things, delete things, and create new users and grant them any role.

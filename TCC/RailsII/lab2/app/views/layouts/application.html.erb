@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Lab2</title>
+  <%= stylesheet_link_tag    "application" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+
+<% flash.each do |level, message| %>
+  <div class="<%= level %>"><%= message %></div>
+<% end %>
+
+<% if current_user %>
+  Logged in as <%= link_to current_user.name, current_user %> [<%= link_to 'log out', logout_path %>]
+<% else %>
+  <%= link_to 'Log in', login_path %>
+<% end %>
+
+<%= yield %>
+
+</body>
+</html>
