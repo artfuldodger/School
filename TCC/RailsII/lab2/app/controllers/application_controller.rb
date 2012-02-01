@@ -6,6 +6,10 @@ class ApplicationController < ActionController::Base
     @current_user ||= User.find(session[:user_id]) if session[:user_id]
   end
 
+  def require_user
+    redirect_to :back, alert: 'You must be logged in to access this area.' unless current_user
+  end
+
   def require_admin_user
     redirect_to :back, alert: 'You must be an administrator to access this area.' unless current_user && current_user.is_admin?
   end
@@ -14,5 +18,5 @@ class ApplicationController < ActionController::Base
     redirect_to :back, alert: 'You are trying to do something goofy, I am afraid.' unless current_user && (current_user.is_admin? || params[:id].to_i == current_user.id)
   end
 
-  helper_method :current_user, :require_admin_user
+  helper_method :current_user, :require_admin_user, :require_user
 end

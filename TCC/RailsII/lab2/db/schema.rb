@@ -11,7 +11,38 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120131040455) do
+ActiveRecord::Schema.define(:version => 20120201035957) do
+
+  create_table "link_comments", :force => true do |t|
+    t.integer  "link_id"
+    t.integer  "user_id"
+    t.text     "comment"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "link_comments", ["link_id"], :name => "index_link_comments_on_link_id_id"
+  add_index "link_comments", ["user_id"], :name => "index_link_comments_on_user_id_id"
+
+  create_table "link_votes", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "link_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "link_votes", ["link_id"], :name => "index_link_votes_on_link_id_id"
+  add_index "link_votes", ["user_id"], :name => "index_link_votes_on_user_id_id"
+
+  create_table "links", :force => true do |t|
+    t.string   "title"
+    t.string   "url"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "links", ["user_id"], :name => "index_links_on_user_id_id"
 
   create_table "roles", :force => true do |t|
     t.string   "name"

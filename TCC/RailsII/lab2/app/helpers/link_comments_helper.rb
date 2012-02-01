@@ -1,0 +1,2 @@
+module LinkCommentsHelper
+end

@@ -1,0 +1,13 @@
+<h3>
+  <%= link_to @link.title, @link.url %>
+</h3>
+
+<p>
+  <b>Submitted by:</b>
+  <%= link_to @link.user.name, @link.user %>
+</p>
+
+
+<% if user_should_be_able_to_edit_link?(current_user, @link) %><%= link_to 'Edit', edit_link_path(@link) %> |<% end %>
+<% if user_should_be_able_to_delete_link?(current_user, @link) %><%= link_to 'Destroy', @link, confirm: 'Are you sure?', method: :delete %> |<% end %>
+<%= link_to 'Back', links_path %>
