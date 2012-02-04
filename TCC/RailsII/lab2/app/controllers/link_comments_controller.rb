@@ -2,6 +2,7 @@ class LinkCommentsController < ApplicationController
   before_filter :get_link, except: [:index, :new]
   before_filter :get_link_comment, except: [:index, :new, :create]
   before_filter :require_user, except: [:index, :show]
+  before_filter :ensure_user_should_be_able_to_edit_comment, only: [:edit, :update]
   before_filter :ensure_user_should_be_able_to_delete_comment, only: [:destroy]
 
   # GET /link_comments
@@ -58,11 +59,9 @@ class LinkCommentsController < ApplicationController
   # PUT /link_comments/1
   # PUT /link_comments/1.json
   def update
-    params[:link_comment][:user_id] = current_user.id
-
     respond_to do |format|
       if @link_comment.update_attributes(params[:link_comment])
-        format.html { redirect_to @link_comment, notice: 'Link comment was successfully updated.' }
+        format.html { redirect_to @link, notice: 'Link comment was successfully updated.' }
         format.json { head :ok }
       else
         format.html { render action: "edit" }
@@ -92,7 +91,11 @@ class LinkCommentsController < ApplicationController
     @link_comment = @link.link_comments.find(params[:id])
   end
 
+  def ensure_user_should_be_able_to_edit_comment
+    current_user && (@link_comment.user == current_user || current_user.is_at_least_a_moderator?)
+  end
+
   def ensure_user_should_be_able_to_delete_comment
-    current_user && (@link_comment.user == current_user || current_user.is_moderator?)
+    current_user && (@link_comment.user == current_user || current_user.is_admin?)
   end
 end

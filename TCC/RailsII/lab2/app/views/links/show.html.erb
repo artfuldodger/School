@@ -9,10 +9,10 @@
   <%= link_to @link.user.name, @link.user %>
 </p>
 
-<% if user_should_be_able_to_edit_link?(current_user, @link) %><%= link_to 'Edit', edit_link_path(@link) %> |<% end %>
-<% if user_should_be_able_to_delete_link?(current_user, @link) %><%= link_to 'Destroy', @link, confirm: 'Are you sure?', method: :delete %> |<% end %>
+<% if user_should_be_able_to_edit_link?(current_user, @link) %><%= link_to 'Edit', edit_link_path(@link) %><% end %>
+<% if user_should_be_able_to_delete_link?(current_user, @link) %>| <%= link_to 'Destroy', @link, confirm: 'Are you sure?', method: :delete %><% end %>
 
-
+<br /><br />
 <h4>Comments</h4>
 
 <% if current_user.present? %>
@@ -26,8 +26,11 @@
   <div class="comment" id="comment_<%= comment.id %>">
     <%= comment.comment %><br />
     - <%= link_to comment.user.name, comment.user %>, <%= time_ago_in_words(comment.created_at) %> ago
+    <% if user_should_be_able_to_edit_comment?(current_user, comment) %>
+      | <%= link_to 'edit', edit_link_link_comment_path(id: comment.id, link_id: @link.id) %>
+    <% end %>
     <% if user_should_be_able_to_delete_comment?(current_user, comment) %>
-    | <%= link_to 'delete', [@link, comment], confirm: 'Are you sure?', method: :delete, remote: true %>
+      | <%= link_to 'delete', [@link, comment], confirm: 'Are you sure?', method: :delete, remote: true %>
     <% end %>
   </div>
 <% end %>
