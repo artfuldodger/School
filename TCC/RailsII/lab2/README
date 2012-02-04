@@ -1,3 +1,10 @@
+Introduction
+============
+This is a basic Reddit/Hacker News/Digg clone. Users can submit links, vote them up (no downvoting), and comment on them.
+
+Setup
+=====
+
 To create the admin user and the three roles, please run `rake db:seed`
 
 This will create the following three roles:
@@ -5,6 +12,10 @@ This will create the following three roles:
 - moderator
 - admin
 
+
+Role Descriptions
+=================
+
 The user role grants people basic access to the site. This role is granted to people who sign up by themselves.
-The moderator role grants people ability to edit things submitted by other people.
-The admin role can edit other things, delete things, and create new users and grant them any role.
+The moderator role grants people ability to edit links submitted by other people and delete others' comments.
+The admin role can edit other links, delete links, and create new users and grant them any role. They can also delete others' comments.
