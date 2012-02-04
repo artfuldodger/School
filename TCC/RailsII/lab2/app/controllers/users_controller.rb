@@ -1,5 +1,4 @@
 class UsersController < ApplicationController
-  before_filter :require_admin_user, only: [:new, :create]
   before_filter :require_user_is_self_or_admin, only: :edit
 
   # GET /users

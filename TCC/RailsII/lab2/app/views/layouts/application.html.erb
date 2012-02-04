@@ -31,19 +31,18 @@
         </ul>
       </div><!--/.nav-collapse -->
 
+      <div class="pull-right">
         <% if current_user %>
-          <div class="pull-right">
           Signed in as <%= link_to current_user.name, current_user %> | <%= link_to 'Log out', logout_path %>
-          </div>
         <% else %>
-          <%= form_tag login_path, class: "form-search navbar-form pull-right" do %>
+          <%= form_tag login_path, class: "form-search navbar-form" do %>
               <%= text_field_tag :email, params[:email], class: 'input-small', placeholder: 'Email' %>
               <%= password_field_tag :password, '', class: 'input-small', placeholder: 'Password' %>
               <%= submit_tag 'Log in', class: 'btn' %>
           <% end %>
-
+          New here? <%= link_to 'Sign up!', new_user_path %>
         <% end %>
-
+      </div>
     </div>
   </div>
 </div>
