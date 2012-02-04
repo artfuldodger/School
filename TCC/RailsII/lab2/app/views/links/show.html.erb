@@ -23,8 +23,11 @@
 <% end %>
 
 <% @link.link_comments.each do |comment| %>
-  <div class="comment">
+  <div class="comment" id="comment_<%= comment.id %>">
     <%= comment.comment %><br />
     - <%= link_to comment.user.name, comment.user %>, <%= time_ago_in_words(comment.created_at) %> ago
+    <% if user_should_be_able_to_delete_comment?(current_user, comment) %>
+    | <%= link_to 'delete', [@link, comment], confirm: 'Are you sure?', method: :delete, remote: true %>
+    <% end %>
   </div>
 <% end %>

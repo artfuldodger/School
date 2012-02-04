@@ -1,6 +1,8 @@
 class LinkCommentsController < ApplicationController
-  before_filter :get_link
+  before_filter :get_link, except: [:index, :new]
+  before_filter :get_link_comment, except: [:index, :new, :create]
   before_filter :require_user, except: [:index, :show]
+  before_filter :ensure_user_should_be_able_to_delete_comment, only: [:destroy]
 
   # GET /link_comments
   # GET /link_comments.json
@@ -16,8 +18,6 @@ class LinkCommentsController < ApplicationController
   # GET /link_comments/1
   # GET /link_comments/1.json
   def show
-    @link_comment = @link.link_comments.find(params[:id])
-
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @link_comment }
@@ -36,9 +36,7 @@ class LinkCommentsController < ApplicationController
   end
 
   # GET /link_comments/1/edit
-  def edit
-    @link_comment = @link.link_comments.find(params[:id])
-  end
+  def edit; end
 
   # POST /link_comments
   # POST /link_comments.json
@@ -61,7 +59,6 @@ class LinkCommentsController < ApplicationController
   # PUT /link_comments/1.json
   def update
     params[:link_comment][:user_id] = current_user.id
-    @link_comment = @link.link_comments.find(params[:id])
 
     respond_to do |format|
       if @link_comment.update_attributes(params[:link_comment])
@@ -77,17 +74,25 @@ class LinkCommentsController < ApplicationController
   # DELETE /link_comments/1
   # DELETE /link_comments/1.json
   def destroy
-    @link_comment = @link.link_comments.find(params[:id])
     @link_comment.destroy
 
     respond_to do |format|
-      format.html { redirect_to link_comments_url }
+      format.html { redirect_to @link }
       format.json { head :ok }
+      format.js
     end
   end
 
   private
   def get_link
     @link = Link.find(params[:link_id])
+  end
+
+  def get_link_comment
+    @link_comment = @link.link_comments.find(params[:id])
+  end
+
+  def ensure_user_should_be_able_to_delete_comment
+    current_user && (@link_comment.user == current_user || current_user.is_moderator?)
   end
 end
