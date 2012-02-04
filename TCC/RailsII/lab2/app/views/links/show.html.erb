@@ -3,6 +3,8 @@
 </h3>
 
 <p>
+  <b>Points:</b> <span id="link_points_<%= @link.id %>"><%= @link.points %></span>
+  [<%= link_to vote_link_text(@link), vote_link_path(@link), method: :post, remote: true, id: "vote_link_#{@link.id}" %>]
   <b>Submitted by:</b>
   <%= link_to @link.user.name, @link.user %>
 </p>
