@@ -81,6 +81,19 @@ class LinksController < ApplicationController
     end
   end
 
+  def vote
+    if current_user.voted_for_links.include?(@link)
+      current_user.link_votes.find_by_link_id(@link.id).delete
+    else
+      current_user.link_votes.create(link: @link)
+    end
+
+    respond_to do |format|
+      # format.html { redirect_to @link }
+      format.js
+    end
+  end
+
   private
 
   def get_link

@@ -3,7 +3,10 @@
 <table>
 <% @links.each do |link| %>
   <tr>
-    <td><%= link.points %> [vote!]</td>
+    <td>
+      <span id="link_points_<%= link.id %>"><%= link.points %></span>
+      [<%= link_to vote_link_text(link), vote_link_path(link), method: :post, remote: true, id: "vote_link_#{link.id}" %>]
+    </td>
     <td><%= link_to link.title, link.url %></td>
     <td><%= link_to link.user.name, link.user %></td>
     <td><%= link_to 'Show', link %></td>

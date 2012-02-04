@@ -1,0 +1,8 @@
+var pointsSpan = $("#link_points_<%= @link.id %>");
+var voteLink = $("#vote_link_<%= @link.id %>");
+var votes = parseInt(pointsSpan.text());
+
+votes += <%= current_user.voted_for_links.include?(@link) %> ? 1 : -1;
+
+voteLink.html('<%= vote_link_text(@link) %>');
+pointsSpan.html(votes);

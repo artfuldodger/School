@@ -3,6 +3,7 @@ Lab2::Application.routes.draw do
   resources :links do
     resources :link_comments
   end
+  post 'links/:id/vote' => "links#vote", as: 'vote_link'
 
   get 'login' => "sessions#new"
 
