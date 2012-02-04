@@ -8,6 +8,7 @@ module LinksHelper
   end
 
   def vote_link_text(link)
+    return 'sign in to vote' unless current_user
     link.voted_for_by_users.include?(current_user) ? 'unvote' : 'vote!'
   end
 end

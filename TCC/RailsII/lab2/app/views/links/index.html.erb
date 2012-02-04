@@ -9,7 +9,7 @@
     </td>
     <td><%= link_to link.title, link.url %></td>
     <td><%= link_to link.user.name, link.user %></td>
-    <td><%= link_to "#{link.comments.size} Comments", link %></td>
+    <td><%= link_to "#{link.link_comments.size} Comments", link %></td>
     <td><% if user_should_be_able_to_edit_link?(current_user, link) %><%= link_to 'Edit', edit_link_path(link) %><% end %></td>
     <td><% if user_should_be_able_to_delete_link?(current_user, link) %><%= link_to 'Destroy', link, confirm: 'Are you sure?', method: :delete %><% end %></td>
   </tr>

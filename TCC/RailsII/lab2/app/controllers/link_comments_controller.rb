@@ -1,8 +1,11 @@
 class LinkCommentsController < ApplicationController
+  before_filter :get_link
+  before_filter :require_user, except: [:index, :show]
+
   # GET /link_comments
   # GET /link_comments.json
   def index
-    @link_comments = LinkComment.all
+    @link_comments = @link.all
 
     respond_to do |format|
       format.html # index.html.erb
@@ -13,7 +16,7 @@ class LinkCommentsController < ApplicationController
   # GET /link_comments/1
   # GET /link_comments/1.json
   def show
-    @link_comment = LinkComment.find(params[:id])
+    @link_comment = @link.link_comments.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -34,17 +37,18 @@ class LinkCommentsController < ApplicationController
 
   # GET /link_comments/1/edit
   def edit
-    @link_comment = LinkComment.find(params[:id])
+    @link_comment = @link.link_comments.find(params[:id])
   end
 
   # POST /link_comments
   # POST /link_comments.json
   def create
-    @link_comment = LinkComment.new(params[:link_comment])
+    params[:link_comment][:user_id] = current_user.id
+    @link_comment = @link.link_comments.create(params[:link_comment])
 
     respond_to do |format|
-      if @link_comment.save
-        format.html { redirect_to @link_comment, notice: 'Link comment was successfully created.' }
+      if @link_comment
+        format.html { redirect_to @link, notice: 'Link comment was successfully created.' }
         format.json { render json: @link_comment, status: :created, location: @link_comment }
       else
         format.html { render action: "new" }
@@ -56,7 +60,8 @@ class LinkCommentsController < ApplicationController
   # PUT /link_comments/1
   # PUT /link_comments/1.json
   def update
-    @link_comment = LinkComment.find(params[:id])
+    params[:link_comment][:user_id] = current_user.id
+    @link_comment = @link.link_comments.find(params[:id])
 
     respond_to do |format|
       if @link_comment.update_attributes(params[:link_comment])
@@ -72,12 +77,17 @@ class LinkCommentsController < ApplicationController
   # DELETE /link_comments/1
   # DELETE /link_comments/1.json
   def destroy
-    @link_comment = LinkComment.find(params[:id])
+    @link_comment = @link.link_comments.find(params[:id])
     @link_comment.destroy
 
     respond_to do |format|
       format.html { redirect_to link_comments_url }
       format.json { head :ok }
     end
+  end
+
+  private
+  def get_link
+    @link = Link.find(params[:link_id])
   end
 end

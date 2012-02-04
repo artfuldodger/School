@@ -9,7 +9,22 @@
   <%= link_to @link.user.name, @link.user %>
 </p>
 
-
 <% if user_should_be_able_to_edit_link?(current_user, @link) %><%= link_to 'Edit', edit_link_path(@link) %> |<% end %>
 <% if user_should_be_able_to_delete_link?(current_user, @link) %><%= link_to 'Destroy', @link, confirm: 'Are you sure?', method: :delete %> |<% end %>
-<%= link_to 'Back', links_path %>
+
+
+<h4>Comments</h4>
+
+<% if current_user.present? %>
+  <%= form_for [@link, LinkComment.new] do |f| %>
+    <%= f.text_area :comment, style: 'height: 50px; width: 400px', placeholder: 'Add a new comment...' %><br />
+    <%= f.submit %>
+  <% end %>
+<% end %>
+
+<% @link.link_comments.each do |comment| %>
+  <div class="comment">
+    <%= comment.comment %><br />
+    - <%= link_to comment.user.name, comment.user %>, <%= time_ago_in_words(comment.created_at) %> ago
+  </div>
+<% end %>

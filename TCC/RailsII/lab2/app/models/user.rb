@@ -11,6 +11,7 @@ class User < ActiveRecord::Base
   has_many :link_votes
   has_many :links
   has_many :voted_for_links, through: :link_votes, source: :link
+  has_many :link_comments
 
   def is_admin?
     role.name == 'admin'
