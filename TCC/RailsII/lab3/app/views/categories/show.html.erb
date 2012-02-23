@@ -1,0 +1,22 @@
+<h2>
+  <%= @category.name %>
+</h2>
+
+<% if current_user_is_admin? %>
+  <%= link_to 'Edit Category', edit_category_path(@category) %> |
+<% end %>
+<% if current_user %>
+  <%= link_to 'New Question', new_category_question_path(@category, Question.new) %> |
+<% end %>
+<%= link_to 'Back to categories', categories_path %>
+<hr />
+
+<% if @questions.size == 0 %>
+  <p>No questions in this category so far.</p>
+<% end %>
+
+<ul>
+  <% @questions.each do |question| %>
+    <li><%= link_to question.title, [@category, question] %> (<%= question.answers_count %> answers)</li>
+  <% end %>
+</ul>

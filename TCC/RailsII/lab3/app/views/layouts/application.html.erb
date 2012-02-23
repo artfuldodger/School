@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Lab3</title>
+  <%= stylesheet_link_tag    "application" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+  <style>
+    .navbar-fixed-top {
+      color: white;
+    }
+    body {
+      padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+    }
+  </style>
+</head>
+<body>
+
+<div class="navbar navbar-fixed-top">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+        <span class="i-bar"></span>
+        <span class="i-bar"></span>
+        <span class="i-bar"></span>
+      </a>
+      <a class="brand" href="/" title="Yet Another Quora Clone">YAQC</a>
+      <div class="nav-collapse">
+        <ul class="nav">
+          <li><a href="/users">Users</a></li>
+        </ul>
+      </div><!--/.nav-collapse -->
+
+      <div class="pull-right">
+        <% if current_user %>
+          Signed in as <%= link_to current_user.name, current_user %> | <%= link_to 'Log out', logout_path %>
+        <% else %>
+          <%= form_tag login_path, class: "form-search navbar-form" do %>
+              <%= text_field_tag :email, params[:email], class: 'input-small', placeholder: 'Email' %>
+              <%= password_field_tag :password, '', class: 'input-small', placeholder: 'Password' %>
+              <%= submit_tag 'Log in', class: 'btn' %>
+          <% end %>
+          New here? <%= link_to 'Sign up!', new_user_path %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <% flash.each do |level, message| %>
+    <div class="alert alert-<%= level %>"><%= message %></div>
+  <% end %>
+
+  <%= yield %>
+</div>
+</body>
+</html>
