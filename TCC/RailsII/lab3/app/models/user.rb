@@ -10,4 +10,7 @@ class User < ActiveRecord::Base
   has_many :questions
   has_many :answers
 
+  def questions_answered
+    self.answers.map(&:question).reject(&:nil?).uniq
+  end
 end

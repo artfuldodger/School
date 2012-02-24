@@ -49,10 +49,10 @@ class AnswersController < ApplicationController
     params[:answer][:question_id] = @question.id
     params[:answer][:user_id] = current_user.id
 
-    @answer = @question.answers.create(params[:answer])
+    @answer = @question.answers.new(params[:answer])
 
     respond_to do |format|
-      if @answer
+      if @answer.save
         format.html { redirect_to [@category, @question], notice: 'Answer was successfully created.' }
         format.json { render json: @answer, status: :created, location: @answer }
       else
@@ -69,7 +69,7 @@ class AnswersController < ApplicationController
 
     respond_to do |format|
       if @answer.update_attributes(params[:answer])
-        format.html { redirect_to @answer, notice: 'Answer was successfully updated.' }
+        format.html { redirect_to [@category, @question], notice: 'Answer was successfully updated.' }
         format.json { head :ok }
       else
         format.html { render action: "edit" }
@@ -85,7 +85,7 @@ class AnswersController < ApplicationController
     @answer.destroy
 
     respond_to do |format|
-      format.html { redirect_to answers_url }
+      format.html { redirect_to [@category, @question] }
       format.json { head :ok }
     end
   end

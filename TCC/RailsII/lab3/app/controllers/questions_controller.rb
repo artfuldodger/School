@@ -44,10 +44,10 @@ class QuestionsController < ApplicationController
   # POST /questions.json
   def create
     params[:question][:user_id] = current_user.id
-    @question = @category.questions.create(params[:question])
+    @question = @category.questions.new(params[:question])
 
     respond_to do |format|
-      if @question
+      if @question.save
         format.html { redirect_to [@category, @question], notice: 'Question was successfully created.' }
         format.json { render json: @question, status: :created, location: @question }
       else
@@ -80,7 +80,7 @@ class QuestionsController < ApplicationController
     @question.destroy
 
     respond_to do |format|
-      format.html { redirect_to questions_url }
+      format.html { redirect_to @category }
       format.json { head :ok }
     end
   end

@@ -19,7 +19,7 @@ describe SessionsController do
   describe "GET 'destroy'" do
     it "returns http success" do
       get 'destroy'
-      response.should be_success
+      response.should redirect_to(root_url)
     end
   end
 

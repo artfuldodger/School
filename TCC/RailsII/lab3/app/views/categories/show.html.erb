@@ -17,6 +17,6 @@
 
 <ul>
   <% @questions.each do |question| %>
-    <li><%= link_to question.title, [@category, question] %> (<%= question.answers_count %> answers)</li>
+    <li><%= link_to question.title, [@category, question] %> (<%= question.num_answers %> answers)</li>
   <% end %>
 </ul>

@@ -24,14 +24,18 @@ describe CategoriesController do
   # Category. As you add validations to Category, be sure to
   # update the return value of this method accordingly.
   def valid_attributes
-    {}
+    { name: 'Ruby' }
   end
   
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
   # CategoriesController. Be sure to keep this updated too.
   def valid_session
-    {}
+    { user_id: @user.id }
+  end
+
+  before do
+    @user = Factory(:user, is_admin: true)
   end
 
   describe "GET index" do

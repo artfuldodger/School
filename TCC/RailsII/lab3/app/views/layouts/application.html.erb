@@ -27,7 +27,7 @@
       <a class="brand" href="/" title="Yet Another Quora Clone">YAQC</a>
       <div class="nav-collapse">
         <ul class="nav">
-          <li><a href="/users">Users</a></li>
+          <li><%= link_to 'Users', users_path %></li>
         </ul>
       </div><!--/.nav-collapse -->
 
@@ -38,7 +38,7 @@
           <%= form_tag login_path, class: "form-search navbar-form" do %>
               <%= text_field_tag :email, params[:email], class: 'input-small', placeholder: 'Email' %>
               <%= password_field_tag :password, '', class: 'input-small', placeholder: 'Password' %>
-              <%= submit_tag 'Log in', class: 'btn' %>
+              <%= submit_tag 'Log in', class: 'btn-primary' %>
           <% end %>
           New here? <%= link_to 'Sign up!', new_user_path %>
         <% end %>

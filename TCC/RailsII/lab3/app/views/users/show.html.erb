@@ -1,18 +1,29 @@
-<p>
-  <b>Email:</b>
-  <%= @user.email %>
-</p>
-
-<p>
-  <b>Name:</b>
+<h2>
   <%= @user.name %>
-</p>
+</h2>
 
 <p>
   <b>Admin?</b>
   <%= @user.is_admin? %>
 </p>
 
+<% if @user.questions.present? %>
+  <h3>Questions Asked</h3>
+  <ul>
+    <% @user.questions.each do |question| %>
+      <li><%= link_to question.title, [question.category, question] %> in <%= link_to question.category.name, question.category %></li>
+    <% end %>
+  </ul>
+<% end %>
+
+<% if @user.questions_answered.present? %>
+  <h3>Answers Provided to Questions</h3>
+  <ul>
+    <% @user.questions_answered.each do |question| %>
+      <li><%= link_to question.title, [question.category, question] %></li>
+    <% end %>
+  </ul>
+<% end %>
 
 <% if current_user_is_admin? %><%= link_to 'Edit', edit_user_path(@user) %> |<% end %>
 <%= link_to 'Back', users_path %>

@@ -3,7 +3,9 @@ class Question < ActiveRecord::Base
   belongs_to :category
   has_many :answers
 
-  def answers_count
+  validates :title, :detail, :category_id, presence: true
+  
+  def num_answers
     answers.size
   end
 end

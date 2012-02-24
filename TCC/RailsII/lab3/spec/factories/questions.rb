@@ -2,8 +2,8 @@
 
 FactoryGirl.define do
   factory :question do
-    user nil
-    category nil
+    user
+    category
     title "MyString"
     detail "MyText"
   end
