@@ -1,4 +1,4 @@
-class WrongNumberOfPlayersError < StandardError ; end 
+class WrongNumberOfPlayersError < StandardError ; end
 
 class NoSuchStrategyError < StandardError ; end
 
@@ -38,10 +38,15 @@ def find_tournament_winner(tournament)
   end
 
   puts "not a single game. about to call rps_game_winner for each winner on #{tournament.inspect}"
-  winners = tournament.map { |game| rps_game_winner(game) }
-  puts "winners = #{winners.inspect}"
+  winners = tournament
+  until winners.size == 1
+    winners = winners.map { |game| rps_game_winner(game) }
+    puts "winners = #{winners.inspect}"
+  end
+  
 
-  find_tournament_winner(winners)
+  winner = find_tournament_winner(winners)
+  puts "winner = #{winner.inspect}"
 end
 
 def is_a_single_game?(tournament)
@@ -55,25 +60,25 @@ def rps_tournament_winner(tournaments)
 end
 
 a = [ [
-    [ ["A", "P"], ["B", "S"] ],
-    [ ["C", "R"], ["D", "S"] ], 
-    [ ["E", "R"], ["F", "S"] ], 
-    [ ["G", "R"], ["H", "S"] ], 
-    [ ["I", "R"], ["J", "S"] ], 
-    [ ["K", "R"], ["L", "S"] ], 
-    [ ["M", "R"], ["N", "S"] ], 
-    [ ["O", "R"], ["P", "S"] ]
-  ],
-  [
-    [ ["A2", "P"], ["B2", "S"] ],
-    [ ["C2", "R"], ["D2", "S"] ], 
-    [ ["E2", "R"], ["F2", "S"] ], 
-    [ ["G2", "R"], ["H2", "S"] ], 
-    [ ["I2", "R"], ["J2", "S"] ], 
-    [ ["K2", "R"], ["L2", "S"] ], 
-    [ ["M2", "R"], ["N2", "S"] ], 
-    [ ["O2", "R"], ["P2", "S"] ]
-  ] 
+  [ ["A", "P"], ["B", "S"] ],
+  [ ["C", "R"], ["D", "S"] ],
+  [ ["E", "R"], ["F", "S"] ],
+  [ ["G", "R"], ["H", "S"] ],
+  [ ["I", "R"], ["J", "S"] ],
+  [ ["K", "R"], ["L", "S"] ],
+  [ ["M", "R"], ["N", "S"] ],
+  [ ["O", "R"], ["P", "S"] ]
+],
+[
+  [ ["A2", "P"], ["B2", "S"] ],
+  [ ["C2", "R"], ["D2", "S"] ],
+  [ ["E2", "R"], ["F2", "S"] ],
+  [ ["G2", "R"], ["H2", "S"] ],
+  [ ["I2", "R"], ["J2", "S"] ],
+  [ ["K2", "R"], ["L2", "S"] ],
+  [ ["M2", "R"], ["N2", "S"] ],
+  [ ["O2", "R"], ["P2", "S"] ]
+]
 ]
 
 puts rps_tournament_winner(a)
