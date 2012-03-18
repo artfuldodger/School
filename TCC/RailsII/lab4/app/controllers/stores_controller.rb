@@ -16,7 +16,7 @@ class StoresController < ApplicationController
   # GET /stores/1
   # GET /stores/1.json
   def show
-    @store = current_users.stores.find(params[:id])
+    @store = current_user.stores.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -38,7 +38,7 @@ class StoresController < ApplicationController
   # POST /stores
   # POST /stores.json
   def create
-    @user = Store.new(params[:store])
+    @store = current_user.stores.new(params[:store])
     
     respond_to do |format|
       if @store.save

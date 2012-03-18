@@ -1,0 +1,9 @@
+<h2><%= @store.name %></h2>
+
+<ul>
+  <% @store.items.each do |item| %>
+    <li><%= item.name %> <%= "(#{item.quantity})" if item.quantity > 1 %></li>
+  <% end %>
+</ul>
+
+<%= link_to 'Add Item', new_store_item_path(@store), class: 'btn' %>
