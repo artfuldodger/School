@@ -15,8 +15,7 @@ end
 Then /I should see "(.*)" before "(.*)"/ do |e1, e2|
   #  ensure that that e1 occurs before e2.
   #  page.content  is the entire content of the page as a string.
-  regexp = Regexp.new ".*#{e1}.*#{e2}"
-  assert = page.body =~ regexp, "Did not find #{e1} before #{e2}"
+  assert page.body =~ /#{e1}.*#{e2}/m, "Did not find #{e1} before #{e2}"
 end
 
 Then /I should see all of the movies/ do
