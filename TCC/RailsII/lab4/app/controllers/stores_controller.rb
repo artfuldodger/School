@@ -52,4 +52,12 @@ class StoresController < ApplicationController
     end
   end
 
+  def destroy
+    if current_user.stores.find_by_id(params[:id]).try(:delete)
+      redirect_to stores_url, notice: 'Store was successfully deleted.'
+    else
+      redirect_to stores_url, notice: 'You cannot delete that store.'
+    end
+  end
+
 end
