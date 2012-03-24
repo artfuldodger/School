@@ -11,7 +11,11 @@
 
 <hr />
 
-<%= link_to 'Back to list of all stores', stores_path, id: 'back_link', title: 'Keyboard shortcut: b' %>
+<%= link_to 'Back to all lists', stores_path, id: 'back_link', title: 'Keyboard shortcut: b' %>
+
+<hr />
+
+<%= link_to 'Delete this list', store_path(@store), method: 'delete', confirm: "Are you sure you want to delete the list for #{@store.name}?" %>
 
 <script type="text/javascript">
   key('a', function() { document.getElementById('add_item').click(); });
