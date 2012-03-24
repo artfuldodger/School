@@ -6,4 +6,11 @@
   <% end %>
 </ul>
 
-<%= link_to 'Add Item', new_store_item_path(@store), class: 'btn' %>
+<%= link_to 'Add Item', new_store_item_path(@store), class: 'btn', id: 'add_item', title: 'Keyboard shortcut: a' %>
+
+
+<hr />
+
+<script type="text/javascript">
+  key('a', function() { document.getElementById('add_item').click(); });
+</script>
