@@ -1,0 +1,8 @@
+require "ZenTest"
+require "autotest/rails"
+
+Autotest.add_hook :initialize do |autotest|
+  %w{.git .svn .hg .DS_Store ._* vendor tmp log doc config .rvmrc Gemfile .autotest README Rakefile}.each do |exception|
+    autotest.add_exception(exception)
+  end
+end
