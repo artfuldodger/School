@@ -3,12 +3,12 @@
 <ul>
 <% @stores.each_with_index do |store, store_index| %>
   <li style="padding-bottom: 15px">
-    <span style="font-size: 1.4em; font-weight: bold"><%= link_to store.name, store %></span>
+    <span style="font-size: 1.4em; font-weight: bold"><%= link_to store.name, store %></span> <%= link_to 'Add item', new_store_item_path(store), class: 'btn btn-small', id: "add_item_#{store.keyboard_shortcut}" %>
     <ul>
       <% store.items.each do |item| %>
         <li><%= item.name %> <%= "(#{item.quantity})" if item.quantity > 1 %></li>
       <% end %>
-      <%= link_to 'Add item', new_store_item_path(store), class: 'btn btn-small', id: "add_item_#{store.keyboard_shortcut}" %>
+      
     </ul>
   </li>
 <% end %>
