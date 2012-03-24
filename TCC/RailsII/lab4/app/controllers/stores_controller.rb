@@ -6,6 +6,7 @@ class StoresController < ApplicationController
   # GET /stores.json
   def index
     @stores = current_user.stores
+    @keyboard_shortcuts = @stores.map(&:name).map { |name| name[0] }
 
     respond_to do |format|
       format.html # index.html.erb
