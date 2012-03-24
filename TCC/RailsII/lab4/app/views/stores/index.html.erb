@@ -13,4 +13,8 @@
 <% end %>
 </ul>
 
-<%= link_to 'Create a new list', new_store_path, class: 'btn' %>
+<%= link_to 'Create a new list', new_store_path, class: 'btn', id: 'create_new', title: 'Keyboard shortcut: c' %>
+
+<script type="text/javascript">
+  key('c', function() { document.getElementById('create_new').click(); });
+</script>

@@ -11,6 +11,9 @@
 
 <hr />
 
+<%= link_to 'Back to list of all stores', stores_path, id: 'back_link', title: 'Keyboard shortcut: b' %>
+
 <script type="text/javascript">
   key('a', function() { document.getElementById('add_item').click(); });
+  key('b', function() { document.getElementById('back_link').click(); });
 </script>
