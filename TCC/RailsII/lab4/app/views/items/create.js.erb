@@ -1,0 +1,6 @@
+<% if @item.valid? %>
+  $("#new_item_li").replaceWith('<%= escape_javascript render @item %>');
+  $("#item_errors").destroy();
+<% else %>
+  $("#new_item_li").prepend('<span class="alert-error"><%= escape_javascript @item.errors.full_messages.join("<br />") %></span>');
+<% end %>

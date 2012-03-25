@@ -1,0 +1,4 @@
+<ul id="items_<%= store.id %>" class="unstyled">
+  <%= render store.items %>
+</ul>
+<%= link_to 'Add item', new_store_item_path(store), remote: true, id: "add_item_#{store.keyboard_shortcut}" %>

@@ -1,0 +1,4 @@
+<li id="item_<%= item.id %>">
+  <%= link_to item.display_name, item_toggle_done_path(item.id), remote: true, class: 'btn btn-small', style: item.done? ? "text-decoration: line-through; min-width: 200px" : 'min-width: 200px' %>
+    [<%= link_to 'X', store_item_path(item.store, item), method: 'delete', confirm: "Are you sure you want to delete #{item.name}?", remote: true %>]
+</li>

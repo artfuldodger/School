@@ -1,13 +1,9 @@
 <h2><%= @store.name %></h2>
 
-<ul>
-  <% @store.items.each do |item| %>
-    <li><%= item.name %> <%= "(#{item.quantity})" if item.quantity > 1 %></li>
-  <% end %>
+<ul id="items_<%= @store.id %>" class="unstyled">
+  <%= render @store.items, locals: { enable_delete: true } %>
 </ul>
-
-<%= link_to 'Add Item', new_store_item_path(@store), class: 'btn', id: 'add_item', title: 'Keyboard shortcut: a' %>
-
+<%= link_to 'Add item', new_store_item_path(@store), remote: true, id: 'add_item_link' %>
 
 <hr />
 
@@ -18,6 +14,11 @@
 <%= link_to 'Edit list name', edit_store_path(@store) %> | <%= link_to 'Delete this list', store_path(@store), method: 'delete', confirm: "Are you sure you want to delete the list for #{@store.name}?" %>
 
 <script type="text/javascript">
-  key('a', function() { document.getElementById('add_item').click(); });
+  key('a', function() { document.getElementById('add_item_link').click(); });
   key('b', function() { document.getElementById('back_link').click(); });
+  key('c', function() { document.getElementById('cancel_new_item').click(); });
+
+  var cancelNewItem = function(event) {
+    $("#new_item_li").remove();
+  }
 </script>

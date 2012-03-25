@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120316025048) do
+ActiveRecord::Schema.define(:version => 20120325044358) do
 
   create_table "items", :force => true do |t|
     t.integer  "store_id"
@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(:version => 20120316025048) do
     t.boolean  "weekly"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "done"
   end
 
   add_index "items", ["store_id"], :name => "index_items_on_store_id"

@@ -1,0 +1,6 @@
+<%= form_for([@store, @item], remote: true) do |f| %>
+  <%= f.text_field :name, style: 'width: 150px', autofocus: 'autofocus' %>
+  <%= f.select :quantity, (1..10).to_a, {}, style: 'width: 50px' %>
+  <%= f.submit 'Save item', class: 'btn' %>
+  [<%= link_to 'cancel', 'javascript:cancelNewItem()', id: 'cancel_new_item' %>]
+<% end %>
