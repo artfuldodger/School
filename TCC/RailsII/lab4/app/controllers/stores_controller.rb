@@ -36,6 +36,29 @@ class StoresController < ApplicationController
     end
   end
 
+  def edit
+    @store = current_user.stores.find(params[:id])
+
+    respond_to do |format|
+      format.html # show.html.erb
+      format.json { render json: @store }
+    end
+  end
+
+  def update
+    @store = Store.find(params[:id])
+
+    respond_to do |format|
+      if @store.update_attributes(params[:store])
+        format.html { redirect_to @store, notice: 'Store was successfully updated.' }
+        format.json { head :ok }
+      else
+        format.html { render action: "edit" }
+        format.json { render json: @store.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
   # POST /stores
   # POST /stores.json
   def create

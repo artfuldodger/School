@@ -15,7 +15,7 @@
 
 <hr />
 
-<%= link_to 'Delete this list', store_path(@store), method: 'delete', confirm: "Are you sure you want to delete the list for #{@store.name}?" %>
+<%= link_to 'Edit list name', edit_store_path(@store) %> | <%= link_to 'Delete this list', store_path(@store), method: 'delete', confirm: "Are you sure you want to delete the list for #{@store.name}?" %>
 
 <script type="text/javascript">
   key('a', function() { document.getElementById('add_item').click(); });
