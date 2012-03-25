@@ -12,9 +12,9 @@
 <%= link_to 'Create a new list', new_store_path, class: 'btn', id: 'create_new', title: 'Keyboard shortcut: c' %>
 
 <script type="text/javascript">
-  key('c', function() { document.getElementById('create_new').click(); });
+  key('c', function() { simulate(document.getElementById('create_new'), 'click'); });
   <% @keyboard_shortcuts.each do |shortcut| %>
-    key('<%= shortcut %>', function() { document.getElementById('add_item_<%= shortcut %>').click(); });
+    key('<%= shortcut %>', function() { simulate(document.getElementById('add_item_<%= shortcut %>'), 'click'); });
   <% end %>
 
   var cancelNewItem = function(event) {
